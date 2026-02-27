@@ -1,0 +1,32 @@
+name: Deploy Random Compliment Generator
+
+on:
+  push:
+    branches:
+      - features
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: random-compliment-generator
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: random-compliment-generator/dist
+          publish_branch: gh-pages
+          user_name: zulaikha
+          user_email: zulaikha@users.noreply.github.com
